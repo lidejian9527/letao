@@ -43,7 +43,7 @@
             </li>
         </ul>
         <div class="p20">
-            <a href="login.html" class="mui-btn btn_outLogin">退出登录</a>
+            <a href="javascript:;" id="logout" class="mui-btn btn_outLogin">退出登录</a>
         </div>
     </div>
     <footer class="cz_tabs">
@@ -62,6 +62,15 @@
             if(info.error) {
                 location.href = './login.html';
             }
+        });
+
+        // 退出登录
+        $('#logout').on('click', function () {
+            $.get('/api/user/logout', function (info) {
+                if(info.success) {
+                    location.href = './login.html';
+                }
+            })
         })
     })
 </script>
