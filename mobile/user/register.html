@@ -22,6 +22,9 @@
     <div class="cz_container">
         <div class="form_box">
             <div class="mui-input-row">
+                <input name="username" type="text" placeholder="用户名">
+            </div>
+            <div class="mui-input-row">
                 <input name="mobile" type="text" placeholder="手机号">
             </div>
             <div class="mui-input-row">
@@ -29,14 +32,10 @@
                 <span class="mui-icon mui-icon-eye"></span>
             </div>
             <div class="mui-input-row">
-                <input name="rePass" type="password" placeholder="确认密码" class="mui-input-password">
-                <span class="mui-icon mui-icon-eye"></span>
-            </div>
-            <div class="mui-input-row">
                 <input name="code" type="text" placeholder="认证码">
                 <a href="javascript:;" class="btn_getCode mui-btn mui-btn-primary" >获取认证码</a>
             </div>
-            <a href="index.html" class="mui-btn mui-btn-primary btn_login">注册</a>
+            <a href="javascript:;" class="mui-btn mui-btn-primary btn_login">注册</a>
             <div class="mui-input-row cz_text">
                 <input type="checkbox" checked/> 我同意《会员服务协议》
                 <a href="login.html">立即登录</a>
@@ -51,5 +50,35 @@
     </footer>
 </div>
 <script src="../res/mui/js/mui.min.js"></script>
+<script src="../../assets/jquery/jquery.min.js"></script>
+<script>
+    $(function () {
+        // 获取验证码
+        $('.btn_getCode').on('click', () => {
+            $.get('/api/user/vCode', (info) => {
+                if(info.vCode) {
+                    $('input[name="code"]').val(info.vCode);
+                }else {
+                    alert('获取验证码失败');
+                }
+            })            
+        });
+        // 注册按钮
+        $('.btn_login').on('click', () => {
+            let mobile = $('input[name="mobile"]').val();
+            let password = $('input[name="pass"]').val();
+            let username = $('input[name="username"]').val();
+            let vCode = $('input[name="code"]').val();
+            $.post('/api/user/register', {mobile, password, username, vCode}, (info) => {
+                if(info.success) {
+                    location.href = './login.html';
+                }else {
+                    alert(info.message);
+                }
+            })
+        })
+
+    })
+</script>
 </body>
 </html>
