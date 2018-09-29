@@ -25,7 +25,7 @@
                 <a class="mui-navigate-right" href="#account">
                     <img class="mui-media-object mui-pull-left head-img" id="head-img" src="../images/user.jpg">
                     <div class="mui-media-body">
-                        Hello MUI
+                        <span class="username"></span>
                         <p class="mui-ellipsis">账号:hellomui</p>
                     </div>
                 </a>
@@ -61,6 +61,9 @@
         $.get('/api/user/queryUserMessage', function (info) {
             if(info.error) {
                 location.href = './login.html';
+            }else {
+                $('.username').text(info.username)
+                // .next().text(`账号:${info}`);
             }
         });
 

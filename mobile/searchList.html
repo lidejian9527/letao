@@ -16,11 +16,11 @@
     <script type="text/template" id="cz_product">
         {{each list}}
         <a href="#" class="cz_product">
-            <div class="box">
+            <div class="box" data-id="{{$value.id}}" data-brandId="{{$value.brandId}}">
                 <img src="{{$value.pic[0].picAddr}}" alt=""/>
                 <p class="name">{{$value.proName}}</p>
                 <p><span class="price">&yen;{{$value.price}}</span><span class="oldPrice">&yen;{{$value.oldPrice}}</span></p>
-                <button class="button" data-id="{{$value.id}}" data-brandId="{{$value.brandId}}">立即购买</button>
+                <button class="button">立即购买</button>
             </div>
         </a>
         {{/each}}
@@ -96,12 +96,21 @@
         });
     });
 
+    
     $(function () {
+        // 商品列表
         $.get('/api/product/queryProduct', {page: 1, pageSize: 10}, (info) => {
-            console.log(info);
-            console.log(template('cz_product', {list: info.data}));
             $('.sh_product').html(template('cz_product', {list: info.data}));
         });
+        
+        // 跳转到商品详情页
+        $('.sh_product').on('tap', '.box > img', function () {
+            let proId = $(this).parent().data('id');            
+            window.location.href = `./product.html?id=${proId}`;
+            // $.get('/api/product/queryProductDetail', {id: proId}, (info) => {
+            //     console.log(info);
+            // })
+        })
     });
 </script>
 </body>
