@@ -12,6 +12,19 @@
     <link rel="stylesheet" href="res/fontAwesome/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="css/common.css"/>
     <link rel="stylesheet" href="css/search.css"/>
+    <script src="../assets/art-template/template-web.js"></script>
+    <script type="text/template" id="cz_product">
+        {{each list}}
+        <a href="#" class="cz_product">
+            <div class="box">
+                <img src="{{$value.pic[0].picAddr}}" alt=""/>
+                <p class="name">{{$value.proName}}</p>
+                <p><span class="price">&yen;{{$value.price}}</span><span class="oldPrice">&yen;{{$value.oldPrice}}</span></p>
+                <button class="button" data-id="{{$value.id}}" data-brandId="{{$value.brandId}}">立即购买</button>
+            </div>
+        </a>
+        {{/each}}
+    </script>
 </head>
 <body>
 <div class="cz_layout">
@@ -34,87 +47,8 @@
                     <a href="javascript:;">销量 <span class="fa fa-angle-down"></span></a>
                     <a href="javascript:;">折扣 <span class="fa fa-angle-down"></span></a>
                 </div>
-                <div class="mui-clearfix">
-                    <a href="product.html" class="cz_product">
-                        <div class="box">
-                            <img src="images/product.jpg" alt=""/>
-                            <p class="name">adidas阿迪达斯 男式 场下休闲篮球鞋S83700 </p>
-                            <p><span class="price">&yen;560.00</span><span class="oldPrice">&yen;888.00</span></p>
-                            <button class="button">立即购买</button>
-                        </div>
-                    </a>
-                    <a href="#" class="cz_product">
-                        <div class="box">
-                            <img src="images/product.jpg" alt=""/>
-                            <p class="name">adidas阿迪达斯 男式 场下休闲篮球鞋S83700 </p>
-                            <p><span class="price">&yen;560.00</span><span class="oldPrice">&yen;888.00</span></p>
-                            <button class="button">立即购买</button>
-                        </div>
-                    </a>
-                    <a href="#" class="cz_product">
-                        <div class="box">
-                            <img src="images/product.jpg" alt=""/>
-                            <p class="name">adidas阿迪达斯 男式 场下休闲篮球鞋S83700 </p>
-                            <p><span class="price">&yen;560.00</span><span class="oldPrice">&yen;888.00</span></p>
-                            <button class="button">立即购买</button>
-                        </div>
-                    </a>
-                    <a href="#" class="cz_product">
-                        <div class="box">
-                            <img src="images/product.jpg" alt=""/>
-                            <p class="name">adidas阿迪达斯 男式 场下休闲篮球鞋S83700 </p>
-                            <p><span class="price">&yen;560.00</span><span class="oldPrice">&yen;888.00</span></p>
-                            <button class="button">立即购买</button>
-                        </div>
-                    </a>
-                    <a href="#" class="cz_product">
-                        <div class="box">
-                            <img src="images/product.jpg" alt=""/>
-                            <p class="name">adidas阿迪达斯 男式 场下休闲篮球鞋S83700 </p>
-                            <p><span class="price">&yen;560.00</span><span class="oldPrice">&yen;888.00</span></p>
-                            <button class="button">立即购买</button>
-                        </div>
-                    </a>
-                    <a href="#" class="cz_product">
-                        <div class="box">
-                            <img src="images/product.jpg" alt=""/>
-                            <p class="name">adidas阿迪达斯 男式 场下休闲篮球鞋S83700 </p>
-                            <p><span class="price">&yen;560.00</span><span class="oldPrice">&yen;888.00</span></p>
-                            <button class="button">立即购买</button>
-                        </div>
-                    </a>
-                    <a href="#" class="cz_product">
-                        <div class="box">
-                            <img src="images/product.jpg" alt=""/>
-                            <p class="name">adidas阿迪达斯 男式 场下休闲篮球鞋S83700 </p>
-                            <p><span class="price">&yen;560.00</span><span class="oldPrice">&yen;888.00</span></p>
-                            <button class="button">立即购买</button>
-                        </div>
-                    </a>
-                    <a href="#" class="cz_product">
-                        <div class="box">
-                            <img src="images/product.jpg" alt=""/>
-                            <p class="name">adidas阿迪达斯 男式 场下休闲篮球鞋S83700 </p>
-                            <p><span class="price">&yen;560.00</span><span class="oldPrice">&yen;888.00</span></p>
-                            <button class="button">立即购买</button>
-                        </div>
-                    </a>
-                    <a href="#" class="cz_product">
-                        <div class="box">
-                            <img src="images/product.jpg" alt=""/>
-                            <p class="name">adidas阿迪达斯 男式 场下休闲篮球鞋S83700 </p>
-                            <p><span class="price">&yen;560.00</span><span class="oldPrice">&yen;888.00</span></p>
-                            <button class="button">立即购买</button>
-                        </div>
-                    </a>
-                    <a href="#" class="cz_product">
-                        <div class="box">
-                            <img src="images/product.jpg" alt=""/>
-                            <p class="name">adidas阿迪达斯 男式 场下休闲篮球鞋S83700 </p>
-                            <p><span class="price">&yen;560.00</span><span class="oldPrice">&yen;888.00</span></p>
-                            <button class="button">立即购买</button>
-                        </div>
-                    </a>
+                <div class="mui-clearfix sh_product">
+                    
                 </div>
             </div>
         </div>
@@ -127,6 +61,7 @@
     </footer>
 </div>
 <script src="res/mui/js/mui.min.js"></script>
+<script src="../assets/jquery/jquery.min.js"></script>
 <script>
     mui(function(){
         mui('.mui-scroll-wrapper').scroll({
@@ -158,6 +93,14 @@
                     }
                 }
             }
+        });
+    });
+
+    $(function () {
+        $.get('/api/product/queryProduct', {page: 1, pageSize: 10}, (info) => {
+            console.log(info);
+            console.log(template('cz_product', {list: info.data}));
+            $('.sh_product').html(template('cz_product', {list: info.data}));
         });
     });
 </script>
