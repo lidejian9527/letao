@@ -24,6 +24,9 @@
             
         </ul>
     </div>
+    <div style="padding: 0 30px">
+        <a href="address_add.html" class="mui-btn mui-btn-primary btn_login">添加收货地址</a>
+    </div>
     <footer class="cz_tabs">
         <a class="tab_home fa fa-home" href="../index.html"><span>首页</span></a>
         <a class="tab_cate fa fa-bars" href="../cate.html"><span>分类</span></a>
@@ -37,7 +40,7 @@
 <script type="text/template" id="address">
     {{each list}}
     <li class="mui-table-view-cell">
-        <div class="mui-slider-right mui-disabled">
+        <div class="mui-slider-right mui-disabled" style="z-index: 999999999999999">
             <a class="mui-btn mui-btn-red">删除</a>
         </div>
         <a href="address_update.html?id={{$value.id}}" class="mui-navigate-right mui-slider-handle">
