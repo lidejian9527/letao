@@ -58,10 +58,7 @@
     $(function () {
         
         $('#login').on('click', function () {
-            $.post('/api/user/login', {
-                username: $('input[type="text"]').val(),
-                password: $('input[type="password"]').val()
-            }, function (info) {
+            $.post('/api/user/login', {username: $('input[type="text"]').val(), password: $('input[type="password"]').val()}, function (info) {
                 if(info.success) {
                     location.href = './index.html';
                 }else {

@@ -40,7 +40,7 @@
         <div class="mui-slider-right mui-disabled">
             <a class="mui-btn mui-btn-red">删除</a>
         </div>
-        <a href="addressManage.html" class="mui-navigate-right mui-slider-handle">
+        <a href="address_update.html?id={{$value.id}}" class="mui-navigate-right mui-slider-handle">
             <div class="delivery">邮编：<span>{{$value.postCode}}</span>&nbsp;收货人：<span>{{$value.recipients}}</span></div>
             <div class="address">{{$value.address}}{{$value.addressDetail}}</div>
         </a>
@@ -50,6 +50,7 @@
 <script>
     $(function () {
         $.get('/api/address/queryAddress', info => {
+            console.log(info);
             $('ul.mui-table-view').html(template('address', {list: info}))
         })
     })
