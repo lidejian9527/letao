@@ -21,33 +21,7 @@
     </header>
     <div class="cz_container">
         <ul class="mui-table-view">
-            <li class="mui-table-view-cell">
-                <div class="mui-slider-right mui-disabled">
-                    <a class="mui-btn mui-btn-red">删除</a>
-                </div>
-                <a href="addressManage.html" class="mui-navigate-right mui-slider-handle">
-                    <div class="delivery">邮编：<span>100000</span>&nbsp;收货人：<span>黄晓明</span></div>
-                    <div class="address">北京市海淀区西三旗街道经验龙办公楼传智播客教育科技有限公司</div>
-                </a>
-            </li>
-            <li class="mui-table-view-cell">
-                <div class="mui-slider-right mui-disabled">
-                    <a class="mui-btn mui-btn-red">删除</a>
-                </div>
-                <a href="addressManage.html" class="mui-navigate-right mui-slider-handle">
-                    <div class="delivery">邮编：<span>100000</span>&nbsp;收货人：<span>黄晓明</span></div>
-                    <div class="address">北京市海淀区西三旗街道经验龙办公楼传智播客教育科技有限公司</div>
-                </a>
-            </li>
-            <li class="mui-table-view-cell">
-                <div class="mui-slider-right mui-disabled">
-                    <a class="mui-btn mui-btn-red">删除</a>
-                </div>
-                <a href="addressManage.html" class="mui-navigate-right mui-slider-handle">
-                    <div class="delivery">邮编：<span>100000</span>&nbsp;收货人：<span>黄晓明</span></div>
-                    <div class="address">北京市海淀区西三旗街道经验龙办公楼传智播客教育科技有限公司</div>
-                </a>
-            </li>
+            
         </ul>
     </div>
     <footer class="cz_tabs">
@@ -58,5 +32,27 @@
     </footer>
 </div>
 <script src="../res/mui/js/mui.min.js"></script>
+<script src="../../assets/jquery/jquery.min.js"></script>
+<script src="../../assets/art-template/template-web.js"></script>
+<script type="text/template" id="address">
+    {{each list}}
+    <li class="mui-table-view-cell">
+        <div class="mui-slider-right mui-disabled">
+            <a class="mui-btn mui-btn-red">删除</a>
+        </div>
+        <a href="addressManage.html" class="mui-navigate-right mui-slider-handle">
+            <div class="delivery">邮编：<span>{{$value.postCode}}</span>&nbsp;收货人：<span>{{$value.recipients}}</span></div>
+            <div class="address">{{$value.address}}{{$value.addressDetail}}</div>
+        </a>
+    </li>
+    {{/each}}
+</script>
+<script>
+    $(function () {
+        $.get('/api/address/queryAddress', info => {
+            $('ul.mui-table-view').html(template('address', {list: info}))
+        })
+    })
+</script>
 </body>
 </html>
