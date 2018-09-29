@@ -53,8 +53,10 @@
 <script>
     $(function () {
         $.get('/api/address/queryAddress', info => {
-            console.log(info);
             $('ul.mui-table-view').html(template('address', {list: info}))
+        });
+        $.get('/api/address/queryAddressTree', info => {
+            console.log(info);
         })
     })
 </script>
