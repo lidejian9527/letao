@@ -1,46 +1,56 @@
 <!DOCTYPE html>
 <html>
+
 <head lang="en">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0" />
     <meta content="yes" name="apple-mobile-web-app-capable">
     <meta content="black" name="apple-mobile-web-app-status-bar-style">
     <meta content="telephone=no" name="format-detection">
     <title>收货地址管理</title>
     <link type="image/x-icon" rel="shortcut icon" href="../images/favicon.ico">
-    <link rel="stylesheet" href="../res/mui/css/mui.min.css"/>
-    <link rel="stylesheet" href="../res/fontAwesome/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="../css/common.css"/>
-    <link rel="stylesheet" href="../css/user.css"/>
+    <link rel="stylesheet" href="../res/mui/css/mui.min.css" />
+    <link rel="stylesheet" href="../res/fontAwesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../css/common.css" />
+    <link rel="stylesheet" href="../css/user.css" />
 </head>
+
 <body>
-<div class="cz_layout bgg">
-    <header class="cz_topBar">
-        <a href="javascript:history.back();" class="icon_back fa fa-arrow-left"></a>
-        <span class="title">收货地址管理</span>
-    </header>
-    <div class="cz_container">
-        <ul class="mui-table-view">
-            
-        </ul>
+    <div class="cz_layout bgg">
+        <header class="cz_topBar">
+            <a href="javascript:history.back();" class="icon_back fa fa-arrow-left"></a>
+            <span class="title">收货地址管理</span>
+        </header>
+        <div class="cz_container">
+            <ul class="mui-table-view">
+
+            </ul>
+        </div>
+        <div style="padding: 0 30px">
+            <a href="address_add.html" class="mui-btn mui-btn-primary btn_login">添加收货地址</a>
+        </div>
+        <footer class="cz_tabs">
+            <a class="tab_home fa fa-home" href="../index.html">
+                <span>首页</span>
+            </a>
+            <a class="tab_cate fa fa-bars" href="../cate.html">
+                <span>分类</span>
+            </a>
+            <a class="tab_cart fa fa-shopping-cart" href="../cart.html">
+                <span>购物车</span>
+            </a>
+            <a class="tab_user fa fa-user" href="../user/index.html">
+                <span>会员中心</span>
+            </a>
+        </footer>
     </div>
-    <div style="padding: 0 30px">
-        <a href="address_add.html" class="mui-btn mui-btn-primary btn_login">添加收货地址</a>
-    </div>
-    <footer class="cz_tabs">
-        <a class="tab_home fa fa-home" href="../index.html"><span>首页</span></a>
-        <a class="tab_cate fa fa-bars" href="../cate.html"><span>分类</span></a>
-        <a class="tab_cart fa fa-shopping-cart" href="../cart.html"><span>购物车</span></a>
-        <a class="tab_user fa fa-user" href="../user/index.html"><span>会员中心</span></a>
-    </footer>
-</div>
-<script src="../res/mui/js/mui.min.js"></script>
-<script src="../../assets/jquery/jquery.min.js"></script>
-<script src="../../assets/art-template/template-web.js"></script>
-<script type="text/template" id="address">
+    <script src="../res/mui/js/mui.min.js"></script>
+    <script src="../../assets/jquery/jquery.min.js"></script>
+    <script src="../../assets/art-template/template-web.js"></script>
+    <script type="text/template" id="address">
     {{each list}}
     <li class="mui-table-view-cell">
-        <div class="mui-slider-right mui-disabled" style="z-index: 999999999999999">
+        <div class="mui-slider-right mui-disabled" data-id="{{$value.id}}">
             <a class="mui-btn mui-btn-red">删除</a>
         </div>
         <a href="address_update.html?id={{$value.id}}" class="mui-navigate-right mui-slider-handle">
@@ -50,15 +60,27 @@
     </li>
     {{/each}}
 </script>
-<script>
-    $(function () {
-        $.get('/api/address/queryAddress', info => {
-            $('ul.mui-table-view').html(template('address', {list: info}))
-        });
-        $.get('/api/address/queryAddressTree', info => {
-            console.log(info);
+    <script>
+        $(function () {
+            // 加载地址列表
+            function loadPage() {
+                $.get('/api/address/queryAddress', info => {
+                    $('ul.mui-table-view').html(template('address', { list: info }))
+                });
+            }
+            loadPage();
+            // 实现删除按钮
+            $('.mui-table-view').on('tap', '.mui-btn-red', function () {
+                let id = $(this).parent().data('id');
+                $.post('/api/address/deleteAddress', { id }, info => {
+                    if(info.success) {
+                        loadPage();
+                    }
+                })
+            })
+
         })
-    })
-</script>
+    </script>
 </body>
+
 </html>
