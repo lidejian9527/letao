@@ -1,45 +1,109 @@
 <!DOCTYPE html>
 <html>
+
 <head lang="en">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0" />
     <meta content="yes" name="apple-mobile-web-app-capable">
     <meta content="black" name="apple-mobile-web-app-status-bar-style">
     <meta content="telephone=no" name="format-detection">
     <title>收货地址管理</title>
     <link type="image/x-icon" rel="shortcut icon" href="../images/favicon.ico">
-    <link rel="stylesheet" href="../res/mui/css/mui.min.css"/>
-    <link rel="stylesheet" href="../res/fontAwesome/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="../css/common.css"/>
-    <link rel="stylesheet" href="../css/user.css"/>
+    <link rel="stylesheet" href="../res/mui/css/mui.min.css" />
+    <link rel="stylesheet" href="../res/fontAwesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../css/common.css" />
+    <link rel="stylesheet" href="../css/user.css" />
 </head>
+
 <body>
-<div class="cz_layout bgg">
-    <header class="cz_topBar">
-        <a href="javascript:history.back();" class="icon_back fa fa-arrow-left"></a>
-        <span class="title">收货地址管理</span>
-    </header>
-    <div class="cz_container">
-        <div class="form_box">
-            <div class="mui-input-row">
-                <input name="delivery" type="text" placeholder="收货人">
+    <div class="cz_layout bgg">
+        <header class="cz_topBar">
+            <a href="javascript:history.back();" class="icon_back fa fa-arrow-left"></a>
+            <span class="title">收货地址管理</span>
+        </header>
+        <div class="cz_container">
+            <div class="form_box">
+                <form action="">
+                    <div class="region">
+                        <select id="p" data-id="">
+                            <option value="">请选择省</option>
+                        </select>
+                        <select id="c" data-id="">
+                            <option value="">请选择市</option>
+                        </select>
+                        <select id="d" data-id="">
+                            <option value="">请选择区/县</option>
+                        </select>
+                    </div>
+                    <div class="mui-input-row">
+                        <input name="recipients" type="text" placeholder="收货人">
+                    </div>
+                    <div class="mui-input-row">
+                        <input name="postCode" type="text" placeholder="邮编">
+                    </div>
+                    <div class="mui-input-row">
+                        <textarea name="addressDetail" id="textarea" rows="5" placeholder="详细地址"></textarea>
+                    </div>
+                    <!-- index.html -->
+                    <button class="mui-btn mui-btn-primary btn_login">确认</button>
+                </form>
+
             </div>
-            <div class="mui-input-row">
-                <input name="postCode" type="text" placeholder="邮编">
-            </div>
-            <div class="mui-input-row">
-                <textarea name="address" id="textarea" rows="5" placeholder="多行文本框"></textarea>
-            </div>
-            <a href="index.html" class="mui-btn mui-btn-primary btn_login">确认</a>
         </div>
+        <footer class="cz_tabs">
+            <a class="tab_home fa fa-home" href="../index.html">
+                <span>首页</span>
+            </a>
+            <a class="tab_cate fa fa-bars" href="../cate.html">
+                <span>分类</span>
+            </a>
+            <a class="tab_cart fa fa-shopping-cart" href="../cart.html">
+                <span>购物车</span>
+            </a>
+            <a class="tab_user fa fa-user" href="../user/index.html">
+                <span>会员中心</span>
+            </a>
+        </footer>
     </div>
-    <footer class="cz_tabs">
-        <a class="tab_home fa fa-home" href="../index.html"><span>首页</span></a>
-        <a class="tab_cate fa fa-bars" href="../cate.html"><span>分类</span></a>
-        <a class="tab_cart fa fa-shopping-cart" href="../cart.html"><span>购物车</span></a>
-        <a class="tab_user fa fa-user" href="../user/index.html"><span>会员中心</span></a>
-    </footer>
-</div>
-<script src="../res/mui/js/mui.min.js"></script>
+    <script src="../res/mui/js/mui.min.js"></script>
+    <script src="../../assets/jquery/jquery.min.js"></script>
+    <script src="../../assets/jquery-region/jquery.region.js"></script>
+    <script>
+
+        $('.region').region({
+            url: '../../assets/jquery-region/region.json'
+        });
+        $(function () {
+            var id = location.search.slice(1).split('=')[1];
+            $.get('/api/address/queryAddress', info => {
+                info.forEach(e => {
+                    if (e.id == id) {
+                        console.log(e);
+                        $('[name="recipients"]').val(e.recipients);
+                        $('[name="postCode"]').val(e.postCode);
+                        $('[name="addressDetail"]').val(e.addressDetail);
+                    }
+                });
+            });
+            $('form').on('submit', function () {
+                let data = $(this).serialize();
+                let address = $('#p option:selected').text() + $('#c option:selected').text() + $('#d option:selected').text();
+                
+                data += '&address=' + address + '&id=' + id;
+                
+                
+                $.post('/api/address/updateAddress', data, info => {
+                    if (info.success) {
+                        location.href = './address.html'
+                    } else {
+                        alert(info.error);
+                    }
+                })
+                return false;
+            });
+
+        })
+    </script>
 </body>
+
 </html>
